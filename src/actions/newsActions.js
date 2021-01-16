@@ -52,14 +52,14 @@ export const getCommentsData = url => {
     };
 };
 
-export const getSearch = query => {
+export const getSearch = (query, page) => {
     return async dispatch => {
         dispatch(asyncActionStart());
         dispatch({
             type: SEARCH_HISTORY,
             query
         })
-        const result = await service.search(query)
+        const result = await service.search(query,page)
           .then(
             response => {
                 dispatch({

@@ -27,10 +27,11 @@ export const getComments = url => {
     })
 }
 
-export const search = query => {
+export const search = (query, page=1) => {
     return axios.get(`/svc/search/v2/articlesearch.json?api-key=${apiKey}`,{
         params: {
             q: query,
+            page
         },
         headers: getHeaders()
     })

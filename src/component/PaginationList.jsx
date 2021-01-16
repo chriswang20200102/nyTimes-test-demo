@@ -1,7 +1,7 @@
 import React, {memo} from 'react'
 import {Pagination} from 'react-bootstrap';
 
-const PaginationList = ({data, currentPage, pageChangeHandle}) => {
+const PaginationList = ({data, currentPage, pageChangeHandle, searchPage}) => {
     const getPageInfo = (currentPage, totalNumber) => {
         const totalPage = Math.min(Math.ceil(totalNumber/10), 100)
         const hasNext = currentPage < totalPage
@@ -14,6 +14,9 @@ const PaginationList = ({data, currentPage, pageChangeHandle}) => {
     }
 
     const getPaginationItem = (currentPage,totalPage) => {
+        if (searchPage) {
+            return <Pagination.Item active={true}>{currentPage}</Pagination.Item>
+        }
         let items = [];
         for (let number = 1; number <= totalPage; number++) {
             items.push(
@@ -27,14 +30,12 @@ const PaginationList = ({data, currentPage, pageChangeHandle}) => {
 
     return (
         <Pagination className='news-list-container-pagination'>
-            <Pagination.First onClick={() => currentPageChange(1)}/>
-            {hasPrev && <Pagination.Prev onClick={() => currentPageChange(currentPage - 1)}/>}
+            {!searchPage && <Pagination.First onClick={() => currentPageChange(1)}/>}
+            {(hasPrev || (searchPage && currentPage !== 1)) && <Pagination.Prev onClick={() => currentPageChange(currentPage - 1)}/>}
             {getPaginationItem(currentPage,totalPage)}
-            {hasNext && <Pagination.Next  onClick={() => currentPageChange(currentPage + 1)}/>}
-            <Pagination.Last onClick={() => currentPageChange(totalPage)}/>
+            {(hasNext || searchPage) && <Pagination.Next  onClick={() => currentPageChange(currentPage + 1)}/>}
+            {!searchPage && <Pagination.Last onClick={() => currentPageChange(totalPage)}/>}
         </Pagination>
     )
 }
 export default memo(PaginationList)
-
-

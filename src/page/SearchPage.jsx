@@ -19,7 +19,7 @@ const SearchPage = () => {
     const [currentPage, setCurrentPage] = useState(1);
     useEffect(()=> {
       if(!pathOr(false, ['data', `${query}`], search)) {
-          dispatch(getSearch(query))
+          dispatch(getSearch(query,1))
       }
     }, [query, dispatch])
 
@@ -40,24 +40,20 @@ const SearchPage = () => {
         );
       }
 
-    const getDisplayList = (newsListData,currentPage) => {
-        let startNum = currentPage > 0 ? (currentPage - 1) * 10 : 0;
-        return newsListData.slice(startNum, startNum + 10)
-    }
-
     const pageChangeHandle = num => {
         setCurrentPage(num)
+        dispatch(getSearch(query,num))
     }
 
     return (
         <Container className='news-list-container'>
             <Grid container spacing={3}> 
-                {getDisplayList(searchData,currentPage).map((item) => {
+                {searchData.map((item) => {
                     return <Grid item xs={4} key={item.web_url}><SearchItem key={item.web_url} {...item }/></Grid>
                 })}
             </Grid>
 
-            <PaginationList data={searchData} currentPage={currentPage} pageChangeHandle={pageChangeHandle}/>
+            <PaginationList data={searchData} currentPage={currentPage} pageChangeHandle={pageChangeHandle} searchPage={true}/>
 
         </Container>
     )
