@@ -15,9 +15,9 @@ with local server using this repo -> https://github.com/techiediaries/fake-api-j
 - Pagination has been implemented in search results page to fetch more results while click pagination button.
 - Spinner has also been implemented whenever we are making a network call.
 - Best coding practices has been used and proper modules are created for better readability.
-
+### `npm install`
+you should npm install and npm install concurrently,it is necessary to run the code
 ### `npm run start`
-
 Runs the app in the development mode and start the local server\
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
